@@ -25,16 +25,19 @@ Para la VH1 creamos la siguiente estructura de carpetas
 ```
 
 primero la carpeta "conf" y dentro copiamos los archivos "apache2.conf" "ports.conf"
+<br>
 ![carpeta conf](./imgs/carpeta_conf.png)
 
 
 En sites avalable coopiamos los archivos conf default y nuestro conf para el Web Host mario.conf
+<br>
 ![carpeta sites available](./imgs/carpeta_sites_available.png)
 
 En la carpeta Websites dentro de mario.com pondremos nuestra pagina web para mario.com "index.html" y dentro de error la pagina que muestra el error 404
+<br>
 ![Carpeta websites](./imgs/carpeta_websites.png)
 
-Entrando en el archivo conf pondremos lo siguiente
+Entrando en el archivo conf pondremos lo siguiente<br>
 ![conf](./imgs/mario_conf.png)
 
 En la carpeta scripts el archivo entrypoint.sh con el siguiente contenido
