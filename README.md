@@ -24,22 +24,22 @@ Para la VH1 creamos la siguiente estructura de carpetas
 ├── scripts
 ```
 
-primero la carpeta "conf" y dentro copiamos los archivos "apache2.conf" "ports.conf"
+- primero la carpeta "conf" y dentro copiamos los archivos "apache2.conf" "ports.conf"
 <br><br>
 ![carpeta conf](./imgs/carpeta_conf.png)
 
-En sites avalable coopiamos los archivos conf default y nuestro conf para el Web Host mario.conf
+- En sites avalable coopiamos los archivos conf default y nuestro conf para el Web Host mario.conf
 <br><br>
 ![carpeta sites available](./imgs/carpeta_sites_available.png)
 
-En la carpeta Websites dentro de mario.com pondremos nuestra pagina web para mario.com "index.html" y dentro de error la pagina que muestra el error 404
+- En la carpeta Websites dentro de mario.com pondremos nuestra pagina web para mario.com "index.html" y dentro de error la pagina que muestra el error 404
 <br><br>
 ![Carpeta websites](./imgs/carpeta_websites.png)
 
-Entrando en el archivo conf pondremos lo siguiente<br><br>
+- Entrando en el archivo conf pondremos lo siguiente<br><br>
 ![conf](./imgs/mario_conf.png)
 
-En la carpeta scripts el archivo entrypoint.sh con el siguiente contenido
+- En la carpeta scripts el archivo entrypoint.sh con el siguiente contenido
 
 ```
   #!/bin/bash
@@ -61,7 +61,7 @@ En la carpeta scripts el archivo entrypoint.sh con el siguiente contenido
   apache2ctl -D FOREGROUND
 ```
 
-Ademas creamos nuestro archivo docker-compose.yml
+- Ademas creamos nuestro archivo docker-compose.yml
 ```
 services:
   web:
@@ -82,8 +82,7 @@ services:
     entrypoint: /scripts/entrypoint.sh # script de inicio
 ```
 
-El archivo de hosts en C:\Windows\System32\drivers\etc\hosts. 
-Lo editaremos con permisos de administrador, añadiendo:
+- El archivo de hosts en C:\Windows\System32\drivers\etc\hosts. Lo editaremos con permisos de administrador, añadiendo:
 
 ```127.0.0.1 mario.com```
 
@@ -91,10 +90,10 @@ Lo editaremos con permisos de administrador, añadiendo:
 Usando la misma estructura de carpetas haremos lo siguiente:
 Agregamos los nuevos archivos:
 
-websites: <br><br>
+- websites: <br><br>
 ![websites2](./imgs/website2.png)<br>
 
-/sites-avalable/dedomingo.conf:
+- /sites-avalable/dedomingo.conf:<br>
 
 ```
 <VirtualHost *:80>
@@ -114,9 +113,99 @@ websites: <br><br>
 </VirtualHost>
 ```
 
-Agregamos dicho fichero al entrypoints.sh : ```a2ensite dedomingo.conf```<br>
+Agregamos dicho fichero al entrypoints.sh : ```a2ensite dedomingo.conf```<br><br>
 ![a2ensite dedomingo](./imgs/a2ensiteDedomingo.png)
 
-de nuevo en nuestro archivo host añadimos: ```127.0.0.1 dedomingo.com```
+de nuevo en nuestro archivo host añadimos: ```127.0.0.1 dedomingo.com```<br>
 
 ## VH3 seguro.net
+Agregaremos a sites available ```seguro.conf``` con el siguinte contenido:<br>
+
+En el puerto 80:
+
+<br>
+
+```
+<VirtualHost *:80>
+    # Redireccion de todo lo 80 a 443
+    ServerName seguro.net
+    ServerAlias www.seguro.net
+    Redirect / https://seguro.net/
+</VirtualHost>
+```
+<br>
+
+En el puerto 443 
+ErrorDocument: Páginas personalizadas para errores:
+- 401: /error/error401.html
+- 403: /error/error403.html
+- 404: /error/error404.html
+- 500: /error/error500.html
+
+```
+<VirtualHost *:443>
+    ServerAdmin wolverine.mda.307@gmail.com
+    DocumentRoot /var/www/html/seguro.net
+    ServerName seguro.net
+    ServerAlias www.seguro.net
+
+    # Configuración SSL
+    SSLEngine On
+    SSLCertificateFile /etc/apache2/certs/seguro.crt
+    SSLCertificateKeyFile /etc/apache2/certs/seguro.key 
+
+    # Habilitar protocolos seguros
+    SSLProtocol All -SSLv3
+
+    # Protección de directorio
+    <Directory "/var/www/html/seguro.net/privado">
+        AuthType Basic
+        AuthName "Acceso Restringido a Usuarios"
+        AuthUserFile /etc/apache2/.htpasswd
+        Require valid-user
+        Options -Indexes
+    </Directory>
+
+    ErrorDocument 401 /error/error401.html
+    ErrorDocument 403 /error/error403.html
+    ErrorDocument 404 /error/error404.html
+    ErrorDocument 500 /error/error500.html
+
+</VirtualHost>
+```
+
+el puerto 443 es esencial para habilitar la navegación segura en sitios web que usan certificados SSL/TLS.
+
+Ahora crearemos la estructura de las distintas webs como una privada para usuarios con acceso y para los diferentes errores 401,403,404,500
+<br><br>
+
+![errores_seguro](./imgs/errores_seguro.png)
+
+Agregamos al entrypoints.sh : ```a2ensite seguro.conf```<br><br>
+
+- creamos las siguientes carpetas:<br>
+![crp](./imgs/carpeta_certs.png)<br><br>
+
+- instalamos el OpenSLL con los siguientes comandos: 
+```
+docker exec -it apache_server /bin/bash
+
+apt-get update
+apt-get install -y openssl
+```
+
+- Generar los certificados SSL
+```
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/apache2/certs/seguro.key -out /etc/apache2/certs/seguro.crt
+```
+<br>
+
+![SSL](./imgs/instalacion_ssl.png)
+<br>
+
+para crear una contraseña usaremos el comando ``` /# htpasswd -c /tmp/.htpasswd mario ```
+pedira contraseña que sera nuestro apellido 2 veces para comprobar
+![poner_contraseña](./imgs/asignar_contraseña.png)
+
+El fichero host debera qeudar tal que asi: 
+![fichero_host](./imgs/fichero_host.png)
