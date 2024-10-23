@@ -46,7 +46,7 @@ En la carpeta scripts el archivo entrypoint.sh con el siguiente contenido
   #!/bin/bash
   
   # Habilitar los sitios
-  a2ensite natalia.conf
+  a2ensite mario.conf
   
   # Deshabilitar los sitios que no deseamos
   # a2dissite 000-default.conf
@@ -88,3 +88,31 @@ Lo editaremos con permisos de administrador, añadiendo:
 
 ```127.0.0.1 mario.com```
 
+## VH2 dedomingo.com
+Usando la misma estructura de carpetas haremos lo siguiente:
+Agregamos los nuevos archivos:
+websites: <br><br>
+![websites2](./imgs/website2.png)<br>
+/sites-avalable/dedomingo.conf:
+```
+<VirtualHost *:80>
+	ServerAdmin wolverine.mda.307@gmail.com
+	DocumentRoot /var/www/html/dedomingo.com
+	ServerName dedomingo.com
+	ServerAlias www.dedomingo.com
+
+	<Directory /var/www/dedomingo.com> 
+      Options Indexes FollowSymLinks
+      AllowOverride All
+      Require all granted
+    </Directory>
+
+	ErrorDocument 404 /error/error404.html
+
+</VirtualHost>
+```
+
+Agregamos dicho fichero al entrypoints.sh : ```a2ensite dedomingo.conf```<br>
+![a2ensite dedomingo](./imgs/a2ensiteDedomingo.png)
+
+y en el host añadimos ```127.0.0.1 dedomingo.com```
