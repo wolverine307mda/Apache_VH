@@ -86,6 +86,12 @@ services:
 
 ```127.0.0.1 mario.com```
 
+<br>
+
+![index](./imgs/pagina1_index.png)
+![error](./imgs/pagina2_error.png)<br><br>
+
+
 ## VH2 dedomingo.com
 Usando la misma estructura de carpetas haremos lo siguiente:
 Agregamos los nuevos archivos:
@@ -117,6 +123,9 @@ Agregamos dicho fichero al entrypoints.sh : ```a2ensite dedomingo.conf```<br><br
 ![a2ensite dedomingo](./imgs/a2ensiteDedomingo.png)
 
 de nuevo en nuestro archivo host añadimos: ```127.0.0.1 dedomingo.com```<br>
+
+![index](./imgs/pagina2_index.png)
+![error](./imgs/pagina2_error.png)<br><br>
 
 ## VH3 seguro.net
 Agregaremos a sites available ```seguro.conf``` con el siguinte contenido:<br>
@@ -209,3 +218,11 @@ pedira contraseña que sera nuestro apellido 2 veces para comprobar
 
 El fichero host debera qeudar tal que asi: 
 ![fichero_host](./imgs/fichero_host.png)
+
+### RESULTADOS:
+
+![segura](./imgs/pagina_segura.png)
+![poner_contasenia](./imgs/poner_contraseña.png)
+![error404](./imgs/pagina2_error.png)
+![error401](./imgs/err_401.png)
+![error500](./imgs/err_500.png)
