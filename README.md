@@ -28,7 +28,6 @@ primero la carpeta "conf" y dentro copiamos los archivos "apache2.conf" "ports.c
 <br><br>
 ![carpeta conf](./imgs/carpeta_conf.png)
 
-
 En sites avalable coopiamos los archivos conf default y nuestro conf para el Web Host mario.conf
 <br><br>
 ![carpeta sites available](./imgs/carpeta_sites_available.png)
@@ -91,9 +90,12 @@ Lo editaremos con permisos de administrador, añadiendo:
 ## VH2 dedomingo.com
 Usando la misma estructura de carpetas haremos lo siguiente:
 Agregamos los nuevos archivos:
+
 websites: <br><br>
 ![websites2](./imgs/website2.png)<br>
+
 /sites-avalable/dedomingo.conf:
+
 ```
 <VirtualHost *:80>
 	ServerAdmin wolverine.mda.307@gmail.com
@@ -115,4 +117,6 @@ websites: <br><br>
 Agregamos dicho fichero al entrypoints.sh : ```a2ensite dedomingo.conf```<br>
 ![a2ensite dedomingo](./imgs/a2ensiteDedomingo.png)
 
-y en el host añadimos ```127.0.0.1 dedomingo.com```
+de nuevo en nuestro archivo host añadimos: ```127.0.0.1 dedomingo.com```
+
+## VH3 seguro.net
