@@ -9,7 +9,7 @@ y sus utilidades
 ```
 sudo apt-get install apache2-utils
 ```
-![sudo apt-get install apache2-utils](./imgs/intal_apache2.png)
+![sudo apt-get install apache2-utils](./imgs/instal_apache2.png)
 
 
 ## VH1 mario.com
