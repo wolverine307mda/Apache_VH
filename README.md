@@ -1,16 +1,4 @@
 # Apache Virtual Host
-En primer lugar debemos instalar Apache en la Terminal de Ubuntu
-```
-sudo apt-get install apache2
-```
-![sudo apt-get install apache2](./imgs/intal_apache.png)
-
-y sus utilidades
-```
-sudo apt-get install apache2-utils
-```
-![sudo apt-get install apache2-utils](./imgs/instal_apache2.png)
-
 
 ## VH1 mario.com
 Para la VH1 creamos la siguiente estructura de carpetas
